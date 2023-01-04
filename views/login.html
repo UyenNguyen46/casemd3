@@ -86,7 +86,7 @@
         }
 
         body {
-            background-color: var(--bodyBackgroundColor);
+            background-color: lightpink;
             color: var(--bodyColor);
             font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
             font-size: var(--bodyFontSize);
@@ -159,10 +159,10 @@
             --loginBorderRadus: 0.25rem;
             --loginColor: #eee;
 
-            --loginInputBackgroundColor: #3b4148;
-            --loginInputHoverBackgroundColor: #434a52;
+            --loginInputBackgroundColor:#ea4c88;
+            --loginInputHoverBackgroundColor: #ea4c88;
 
-            --loginLabelBackgroundColor: #363b41;
+            --loginLabelBackgroundColor: #ea4c88;
 
             --loginSubmitBackgroundColor: #ea4c88;
             --loginSubmitColor: #eee;
@@ -182,7 +182,7 @@
         }
 
         .login label {
-            background-color: var(--loginLabelBackgroundColor);
+            background-color:palevioletred;
             border-bottom-right-radius: 0;
             border-top-right-radius: 0;
             padding-inline: 1.25rem;
@@ -190,7 +190,7 @@
 
         .login input[type="password"],
         .login input[type="text"] {
-            background-color: var(--loginInputBackgroundColor);
+            background-color: palevioletred;
             border-bottom-left-radius: 0;
             border-top-left-radius: 0;
         }
@@ -199,11 +199,11 @@
         .login input[type="password"]:hover,
         .login input[type="text"]:focus,
         .login input[type="text"]:hover {
-            background-color: var(--loginInputHoverBackgroundColor);
+            background-color: palevioletred;
         }
 
         .login input[type="submit"] {
-            background-color: var(--loginSubmitBackgroundColor);
+            background-color: palevioletred;
             color: var(--loginSubmitColor);
             font-weight: 700;
             text-transform: uppercase;
@@ -230,7 +230,7 @@
 
 <div class="grid">
 
-    <form action="" method="POST" class="form login">
+    <form action="/myhome" method="POST" class="form login">
 
         <div class="form__field">
             <label for="login__username"><svg class="icon">
@@ -252,7 +252,7 @@
 
     </form>
 
-    <p class="text--center">Not a member? <a href="#">Sign up now</a> <svg class="icon">
+    <p class="text--center">Not a member? <a href="/signup">Sign up now</a> <svg class="icon">
         <use xlink:href="#icon-arrow-right"></use>
     </svg></p>
 
