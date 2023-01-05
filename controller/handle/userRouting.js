@@ -70,7 +70,7 @@ class UserRouting {
             if (err) {
                 console.log(err)
             } else {
-                let posts = await postService.getPost();
+                let posts = await postService.getPosts();
                 res.write(homeHtml)
                 res.end();
             }
@@ -80,11 +80,11 @@ class UserRouting {
     static showMyHome(req, res) {
         fs.readFile('./views/myHome.html', "utf-8", async (err, homeHtml) => {
             res.writeHead(200, 'text/html');
-            let posts = await postService.getPost();
+            let posts = await postService.getPosts();
 
             let html = ``
             for (let i = 0; i < posts.length; i++) {
-                html += `<div class="col-3">
+                html += `<div class="col-6">
                             <div class="card">
                                 <img class="card-img-top" src="${posts[i].image} " alt="Card image cap">
                                     <div class="card-body">
@@ -107,7 +107,6 @@ class UserRouting {
         fs.readFile('./views/detail.html', "utf-8", async (err, homeHtml) => {
             res.writeHead(200, 'text/html');
             let posts = await postService.getPost(id);
-            console.log(posts)
             let html = ``;
             for (let i = 0; i < posts.length; i++) {
                 html += `
@@ -125,12 +124,13 @@ class UserRouting {
                                `
             }
             homeHtml = homeHtml.replace('{post}', html);
-            await res.write(homeHtml);
+            res.write(homeHtml);
             res.end();
         })
     }
 
     static deletePost(req, res, id) {
+        console.log(id)
         if (req.method === "GET") {
             fs.readFile('./views/delete.html', 'utf8', async (err, deleteHtml) => {
                 if (err) {
@@ -142,6 +142,7 @@ class UserRouting {
                 }
             })
         } else {
+            console.log('u', id)
             let mess = userService.remove(id)
             res.writeHead(301, {'location': '/myhome'})
             res.end()
@@ -150,8 +151,8 @@ class UserRouting {
     }
 
     static editPost(req, res, id) {
+        console.log(id)
         if (req.method === 'GET') {
-            console.log(1)
             fs.readFile('./views/edit.html', 'utf-8', async (err, editHtml) => {
                 if (err) {
                     console.log(err.message)
@@ -186,6 +187,7 @@ class UserRouting {
     }
 
     static createPost(req, res) {
+        console.log(req.headers.cookie)
         if (req.method === 'GET') {
             fs.readFile('./views/create.html', 'utf-8', async (err, createHtml) => {
                 if (err) {
@@ -206,9 +208,8 @@ class UserRouting {
                     console.log(err)
                 } else {
                     const post = qs.parse(data);
-                    const mess = await userService.save(post);
-
-                    res.writeHead(301, {'location': '/home'})
+                    await userService.save(post);
+                    res.writeHead(301, {'location': '/myhome'})
                     res.end();
                 }
             })

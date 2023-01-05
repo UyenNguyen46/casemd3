@@ -52,9 +52,9 @@ class UserService {
     save(post) {
         let connect = connection1.getConnection();
         return new Promise((resolve, reject) => {
-            connect.query(`insert into post(createTime, name, image, description)
-                           values (${post.createTime}, '${post.name}', '${post.image}', '${post.description}
-                                   ')`, (err) => {
+            connect.query(`insert into post(idUser,content, image, createTime)
+                           values (${post.idUser}
+                           ,'${post.content}', '${post.image}', '${post.createTime}')`, (err) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -65,17 +65,15 @@ class UserService {
 
     }
 
-    remove(id) {
+      remove(id) {
         let connect = connection1.getConnection();
-        let sql = `delete *
-                   from blog.post
-                   where id = ${id}`
+        let sql = `delete from blog.post where id = ${id}`
         return new Promise((resolve, reject) => {
             connect.query(sql, (err) => {
                 if (err) {
                     reject(err)
                 } else {
-                    resolve('Xoa thah cong')
+                    resolve('Xoa thanh cong')
                 }
             })
         })
@@ -86,10 +84,10 @@ class UserService {
         let connect = connection1.getConnection();
         return new Promise((resolve, reject) => {
             connect.query(`update post
-                           set content       = '${post.content}',
+                           set content    = '${post.content}',
                                createtime = '${post.createTime}',
                                image      = '${post.image}'
-                               
+
                            where id = ${id}`, (err, post) => {
                 if (err) {
                     reject(err);
@@ -100,24 +98,14 @@ class UserService {
             })
         })
     }
+
     findById(id) {
         let conn = connection1.getConnection();
         console.log(connection1)
         return new Promise((resolve, reject) => {
-            conn.query(`SELECT * FROM post WHERE id = ${id}`,(err, post) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(post);
-                }
-            })
-        })
-    }
-    searchPost(search) {
-        let connection1 = connection1.getConnection();
-        let sql = `SELECT * FROM post WHERE name LIKE '%${search}%'`
-        return new Promise((resolve, reject) => {
-            connection1.query(sql,(err, post) => {
+            conn.query(`SELECT *
+                        FROM post
+                        WHERE id = ${id}`, (err, post) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -127,9 +115,39 @@ class UserService {
         })
     }
 
+    searchPost(search) {
+        let connection1 = connection1.getConnection();
+        let sql = `SELECT *
+                   FROM post
+                   WHERE name LIKE '%${search}%'`
+        return new Promise((resolve, reject) => {
+            connection1.query(sql, (err, post) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(post);
+                }
+            })
+        })
+    }
+
+    searchUserName(userName) {
+        let connection1 = connection1.getConnection();
+        let sql = `SELECT *
+                   FROM post
+                   WHERE name LIKE '%${userName}%'`
+        return new Promise((resolve, reject) => {
+            connection1.query(sql, (err, post) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(post);
+                }
+            })
+        })
+    }
 
 }
 
-    module
-.
-    exports = new UserService()
+module
+    .exports = new UserService()

@@ -5,7 +5,7 @@ class PostService {
     static getPosts(){
         let connection = Connection.getConnection();
         return new Promise((resolve, reject) => {
-            connection.query(`select * from post `, (err, data) => {
+            connection.query(`select * from post join user u on post.idUser = u.idUser`, (err, data) => {
                 if (err) {
                     reject(err)
                 } else {
